@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+
+  <h3 class="mb-4">{{title}}</h3>
+  {% if cards %}
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>#</th>
+          <th>Word</th>
+          <th>meaning</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for card in cards %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ card.word }}</td>
+            <td>{{ card.meaning }}</td>
+            <td>{{ card.example }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <div class="alert alert-warning" role="alert">No cards available.</div>
+  {% endif %}
+{% endblock %}

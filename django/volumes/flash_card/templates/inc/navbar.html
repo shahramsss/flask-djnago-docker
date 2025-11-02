@@ -1,0 +1,98 @@
+<nav class="navbar navbar-expand-lg" style="background-color: #343a40;">
+  <div class="container-fluid">
+    <!-- لوگو و دکمه اصلی صفحه -->
+    <a class="navbar-brand btn btn-warning" href="{% url 'reserve:home' %}">صفحه اصلی</a>
+
+    <!-- دکمه‌ی باز و بسته شدن Navbar در موبایل -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- محتوای Navbar -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- لینک‌های اصلی Navbar -->
+        <li class="nav-item">
+          <a class="nav-link text-white" aria-current="page" href="{% url 'reserve:home' %}">خانه</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'reserve:rooms' %}">اماکن</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'reserve:meals' %}">غذاها</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'reserve:images' %}">تصاویر</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'reserve:map' %}">نقشه راه</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'reserve:contact' %}">تماس با ما</a>
+        </li>
+
+        <!-- منوی کشویی جدید -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+             aria-expanded="false">رزرو</a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="{% url 'reserve:book' meal_str='breakfast' %}">صبحانه</a></li>
+            <li><a class="dropdown-item" href="{% url 'reserve:book' meal_str='lunch' %}">ناهار</a></li>
+            <li><a class="dropdown-item" href="{% url 'reserve:book' meal_str='dinner' %}">شام</a></li>
+            <li><hr class="dropdown-divider"></li> <!-- خط جداکننده -->
+            <li><a class="dropdown-item" href="{% url 'reserve:book' meal_str='dinner_breakfast' %}">شام و صبحانه</a></li>
+            <li><a class="dropdown-item" href="{% url 'reserve:book' meal_str='breakfast_lunch' %}">صبحانه و ناهار</a></li>
+            <li><a class="dropdown-item" href="{% url 'reserve:book' meal_str='lunch_dinner' %}">ناهار و شام</a></li>
+            <li><hr class="dropdown-divider"></li> <!-- خط جداکننده -->
+            <li><a class="dropdown-item" href="{% url 'reserve:book' meal_str='one_day' %}">یک روزه</a></li>
+            <li><hr class="dropdown-divider"></li> <!-- خط جداکننده -->
+            <li><a class="dropdown-item" href="{% url 'reserve:book' meal_str='celebration_dinner' %}">جشن و عروسی(شام)</a></li>
+            <li><a class="dropdown-item" href="{% url 'reserve:book' meal_str='celebration_lunch' %}">جشن و عروسی(ناهار)</a></li>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- دکمه‌های ورود و ثبت نام یا منوی کاربر بسته به وضعیت احراز هویت -->
+      <div class="d-flex">
+        {% if request.user.is_authenticated %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if request.user.is_staff or request.user.is_superuser %}
+          <!-- لینک "مدیریت رزروها" فقط برای کارمندان یا سوپر یوزرها -->
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'reserve:reserve_manage' %}">مدیریت رزروها</a>
+          </li>
+          {% endif %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">{{ request.user.full_name }}</a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <a class="dropdown-item" href="{% url 'reserve:reservations' %}">رزروهای من</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'account:password_change' %}">تغییر رمز عبور</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'account:logout' %}">خروج</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        {% else %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'account:login' %}">ورود</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'account:user_register' %}">ثبت نام</a>
+          </li>
+        </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+  <ul class="list-group">
+    {% if cards %}
+      {% for card in cards %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ card.word }}
+          <a href="{% url 'home:cardsdetails' card.id %}" class="btn btn-sm btn-primary">View</a>
+        </li>
+      {% endfor %}
+    {% else %}
+      <div dir="rtl" class="alert alert-warning alert-dismissible fade show" role="alert">
+        کارتی برای مرور وجود ندارد!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+    {% endif %}
+  </ul>
+{% endblock %}

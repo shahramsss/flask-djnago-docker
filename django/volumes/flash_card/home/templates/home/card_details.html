@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="flashcard-container">
+    <!-- نمایش کلمه -->
+    <h1 class="text-dark">{{ card.word }}</h1>
+
+    <!-- پاسخ مخفی -->
+    <p id="answer" class="answer h3 my-5" style="display: none;">{{ card.meaning }}</p>
+    <!-- دکمه نمایش پاسخ -->
+    <div id="btns" class="my-2" style="display: none;">
+      <form action="" method="post">
+        {% csrf_token %}
+        <button class="btn btn-success" onclick="showAnswer()" type="submit" value="yes" name="answer">Currect</button>
+        <button  class="btn btn-danger" onclick="showAnswer()" type="submit" value="no" name="answer">Wrong</button>
+      </form>
+    </div>
+    <button id="btn-show" class="btn btn-primary" onclick="showAnswer()">Show Answer</button>
+  </div>
+
+  <!-- اسکریپت برای نمایش پاسخ -->
+  <script>
+    function showAnswer() {
+      const answerElement = document.getElementById('answer')
+      const btnsElement = document.getElementById('btns')
+      const btnshow = document.getElementById('btn-show')
+      answerElement.style.display = 'block'
+      btnsElement.style.display = 'block'
+      btnshow.style.display = 'none'
+    }
+  </script>
+{% endblock %}
