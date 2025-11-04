@@ -8,10 +8,37 @@ services:
       - 8000
     # ports:
     #   - 8000:8000
+    environment:
+      - MARIADB_DATABASE=mariadb
+      - MARIADB_USER=SSS
+      - MARIADB_PASSWORD=111
+      - MARIADB_HOST=mariadb
     volumes:
       - type: "bind"
         source: ./volumes/flash_card/
         target: /app
+
+    depends_on:
+      - mariadb
+      - nginx
+
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    restart: always
+    expose:
+      - 3306
+    # ports:
+    #   - 8000:8000
+    environment:
+      - MARIADB_DATABASE=mariadb
+      - MARIADB_USER=SSS
+      - MARIADB_PASSWORD=111
+      - MARIADB_ROOT_PASSWORD=111
+    volumes:
+      - type: "bind"
+        source: ./volumes/dbdata/
+        target: /var/lib/mysql
 
   nginx:
     build: ./nginx
